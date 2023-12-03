@@ -50,8 +50,7 @@ fn part2() {
     let result = puzzle_input
         .lines()
         .map(|line| {
-            let (game, pull_str) = line.split_once(": ").unwrap();
-            let id = game.split_once(" ").unwrap().1.parse::<i32>().unwrap();
+            let (_, pull_str) = line.split_once(": ").unwrap();
             let pulls = pull_str.split("; ");
 
             let mut max_red = 0;
