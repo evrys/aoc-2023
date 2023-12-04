@@ -59,7 +59,6 @@ fn part2() {
 
         let num_matches = winners.intersection(&havenums).count();
 
-        println!("{}: {}", i + 1, card_counts[i]);
         for _ in 0..card_counts[i] {
             for j in 0..num_matches {
                 card_counts[i + j + 1] += 1;
