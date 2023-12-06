@@ -273,36 +273,15 @@ fn part2() {
         garden.mappers.push(mapper);
     }
 
-    let path = garden.find_mapper_path("seed", "location").unwrap();
+    let combinations = garden
+        .mappers
+        .iter()
+        .map(|mapper| mapper.parts.len())
+        .reduce(|a, b| a * b)
+        .unwrap();
 
-    let mut total_seeds = 0;
-    for range in ranges.iter() {
-        total_seeds += range.1;
-    }
-
-    let mut min_location = u64::MAX;
-    let mut seeds_checked = 0;
-    for range in ranges.iter() {
-        for seed in range.0..(range.0 + range.1) {
-            let location = convert(seed, &path);
-            if location < min_location {
-                min_location = location;
-                println!("New best: {} (seed {})", min_location, seed)
-            }
-
-            seeds_checked += 1;
-            if seeds_checked % 1000000 == 0 {
-                println!(
-                    "{} / {} ({}%)",
-                    seeds_checked,
-                    total_seeds,
-                    ((seeds_checked as f64 / total_seeds as f64) * 100.0) as i64
-                );
-            }
-        }
-    }
-
-    println!("Part 2: {}", min_location);
+    println!("Combinations: {}", combinations);
+    // println!("Part 2: {}", min_location);
 }
 
 fn main() {
