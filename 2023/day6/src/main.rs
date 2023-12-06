@@ -71,6 +71,8 @@ fn part2() {
     let mut ways_to_win = 0;
     let mut held_ms = 0;
 
+    // Original, brute force solution
+
     while held_ms <= time {
         held_ms += 1;
         let distance = held_ms * (time - held_ms);
@@ -80,6 +82,34 @@ fn part2() {
     }
 
     println!("Part 2: {}", ways_to_win);
+
+    // Later I figured out the proper mathsy way to do it
+
+    // f(x) = x * (time - x)
+    // f(x) = -x^2 + time * x
+    // -x^2 + time * x = record_to_beat
+    // -x^2 + time * x - record_to_beat = 0
+
+    // Now we can apply quadratic formula
+
+    // ax^2 + bx + c = 0
+    // x = (-b±√(b²-4ac))/(2a)
+
+    let a = -1.0;
+    let b = time as f64;
+    let c = -record_to_beat as f64;
+    let root1 = (-b + (b.powf(2.0) - (4.0 * a * c)).sqrt()) / (2.0 * a);
+    let root2 = (-b - (b.powf(2.0) - (4.0 * a * c)).sqrt()) / (2.0 * a);
+
+    // Every value of x between the first and last root on the parabola
+    // Gives a higher distance than the record distance
+
+    let first_root = if root1 < root2 { root1 } else { root2 };
+    let last_root = if root1 > root2 { root1 } else { root2 };
+
+    let num_better_x = (last_root - first_root) as i64;
+
+    println!("Part 2 fancy: {}", num_better_x);
 }
 
 fn main() {
